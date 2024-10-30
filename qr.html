@@ -14,7 +14,7 @@
     <script>
         async function generateQRCode() {
             // Obtener un token único del servidor
-            const response = await fetch("https://qrasistencia-production.up.railway.app/");
+            const response = await fetch("https://qrasistencia-production.up.railway.app/generate-token");
             const data = await response.json();
             const token = data.token;
 
