@@ -2,7 +2,7 @@
 const express = require("express");
 const cors = require("cors"); // Permitir solicitudes desde otros orígenes
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 // Middleware
 app.use(cors()); // Habilita CORS para todas las rutas
