@@ -5,7 +5,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 <script>
 document.getElementById("generateQRButton").addEventListener("click", async () => {
-    // Datos de ejemplo; reemplázalos con datos reales de las páginas anteriores
+    // Datos de ejemplo; reemplázalos con datos reales
     const attendanceData = {
         career: "Desarrollo de Software",
         professor: "Juan Pérez",
@@ -23,7 +23,7 @@ document.getElementById("generateQRButton").addEventListener("click", async () =
         });
 
         if (response.ok) {
-            // Obtener un token de asistencia o datos del QR del backend
+            // Obtener el token de asistencia o datos del QR del backend
             const data = await response.json();
             const qrToken = data.token; // Suponiendo que el backend devuelve un `token`
 
