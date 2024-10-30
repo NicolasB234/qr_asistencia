@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleccionar Carrera</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Selecciona una Carrera</h1>
+    <div class="button-container">
+        <button onclick="selectCareer('desarrollo-software')">Desarrollo de Software</button>
+        <button onclick="selectCareer('profesorado-ingles')">Profesorado de Inglés</button>
+        <button onclick="selectCareer('infraestructura')">Infraestructura</button>
+        <button onclick="selectCareer('enfermeria')">Enfermería</button>
+    </div>
+
+    <script>
+        function selectCareer(career) {
+            localStorage.setItem("selectedCareer", career);
+            window.location.href = `${career}-profesores.html`;
+        }
+    </script>
+</body>
+</html>

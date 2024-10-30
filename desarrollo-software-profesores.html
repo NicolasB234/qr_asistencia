@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profesores - Desarrollo de Software</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Selecciona un Profesor</h1>
+    <div class="button-container">
+        <button onclick="selectProfessor('profesor1')">Profesor 1</button>
+        <button onclick="selectProfessor('profesor2')">Profesor 2</button>
+    </div>
+
+    <script>
+        function selectProfessor(professor) {
+            localStorage.setItem("selectedProfessor", professor);
+            window.location.href = `materias.html`;
+        }
+    </script>
+</body>
+</html>

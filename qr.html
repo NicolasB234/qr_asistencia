@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asistencia con QR</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+    <h1>Asistencia de Profesores</h1>
+    <button onclick="generateQRCode()">Generar QR para Registrar Asistencia</button>
+    <div id="qr"></div>
+
+    <script>
+        async function generateQRCode() {
+            // Obtener un token único del servidor
+            const response = await fetch("http://localhost:3000/generate-token");
+            const data = await response.json();
+            const token = data.token;
+
+            const attendanceData = {
+                token,
+                career: "Desarrollo de Software", 
+                professor: "Juan Pérez",
+                subject: "Programación"
+            };
+
+            const url = `http://localhost:3000/register?token=${encodeURIComponent(attendanceData.token)}&career=${encodeURIComponent(attendanceData.career)}&professor=${encodeURIComponent(attendanceData.professor)}&subject=${encodeURIComponent(attendanceData.subject)}`;
+            
+            // Generar el código QR
+            const qrContainer = document.getElementById("qr");
+            qrContainer.innerHTML = ""; // Limpiar cualquier QR existente
+            new QRCode(qrContainer, {
+                text: JSON.stringify(attendanceData),
+                width: 200,
+                height: 200,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+    </script>
+</body>
+</html>
+
