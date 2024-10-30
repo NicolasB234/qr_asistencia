@@ -43,6 +43,9 @@ app.post("/register", (req, res) => {
 });
 
 // Inicia el servidor
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
-    console.log(`Servidor en funcionamiento en http://localhost:${port}`);
+    console.log(`Servidor en funcionamiento en el puerto ${port}`);
+});
+
 });
