@@ -1,45 +1,44 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asistencia con QR</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-</head>
-<body>
-    <h1>Asistencia de Profesores</h1>
-    <button onclick="generateQRCode()">Generar QR para Registrar Asistencia</button>
-    <div id="qr"></div>
+<!-- index.html -->
+<button id="generateQRButton">Generar QR</button>
+<div id="qrContainer"></div>
 
-    <script>
-        async function generateQRCode() {
-            // Obtener un token único del servidor
-            const response = await fetch("https://qrasistencia-production.up.railway.app/generate-token");
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+<script>
+document.getElementById("generateQRButton").addEventListener("click", async () => {
+    // Datos de ejemplo; reemplázalos con datos reales
+    const attendanceData = {
+        career: "Desarrollo de Software",
+        professor: "Juan Pérez",
+        subject: "Programación"
+    };
+
+    try {
+        // Envía los datos al backend para registrar la asistencia
+        const response = await fetch("https://tu-backend-url.railway.app/registrar-asistencia", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(attendanceData)
+        });
+
+        if (response.ok) {
+            // Obtener un token de asistencia o datos del QR del backend
             const data = await response.json();
-            const token = data.token;
+            const qrToken = data.token; // Suponiendo que el backend devuelve un `token`
 
-            const attendanceData = {
-                token,
-                career: "Desarrollo de Software", 
-                professor: "Juan Pérez",
-                subject: "Programación"
-            };
-
-            const url = `https://qrasistencia-production.up.railway.app/register?token=${encodeURIComponent(attendanceData.token)}&career=${encodeURIComponent(attendanceData.career)}&professor=${encodeURIComponent(attendanceData.professor)}&subject=${encodeURIComponent(attendanceData.subject)}`;
-            
-            // Generar el código QR
-            const qrContainer = document.getElementById("qr");
-            qrContainer.innerHTML = ""; // Limpiar cualquier QR existente
-            new QRCode(qrContainer, {
-                text: JSON.stringify(attendanceData),
-                width: 200,
-                height: 200,
-                colorDark: "#000000",
-                colorLight: "#ffffff",
-                correctLevel: QRCode.CorrectLevel.H
+            // Generar el QR usando el token
+            const qr = new QRious({
+                element: document.getElementById("qrContainer"),
+                value: qrToken,
+                size: 150
             });
+        } else {
+            console.error("Error en la solicitud:", response.statusText);
         }
-    </script>
-</body>
-</html>
+    } catch (error) {
+        console.error("Error al generar el QR:", error);
+    }
+});
+</script>
 
